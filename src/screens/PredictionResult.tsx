@@ -12,12 +12,15 @@ import {
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/core';
+import {Button, Text as Text2} from '../components/';
+import {useTheme} from '../hooks/';
 
 const isAndroid = Platform.OS === 'android';
 
 const PredictionResult = ({route, navigation}) => {
   // const navigation = useNavigation();
   const {samplePred} = route.params;
+  const {assets, colors, gradients, sizes} = useTheme();
 
   return (
     <SafeAreaView>
@@ -246,7 +249,7 @@ const PredictionResult = ({route, navigation}) => {
           </View>
         </View>
 
-        <Pressable
+        {/* <Pressable
           style={{
             marginRight: 20,
             marginLeft: 20,
@@ -272,7 +275,34 @@ const PredictionResult = ({route, navigation}) => {
             }}>
             BACK
           </Text>
-        </Pressable>
+        </Pressable> */}
+        <View
+          style={{
+            marginRight: 20,
+            marginLeft: 20,
+            marginTop: 10,
+            // paddingTop: 10,
+            // paddingBottom: 10,
+            borderRadius: 20,
+            // borderWidth: 2,
+            // borderColor: '#797878',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Button
+            onPress={() => {
+              navigation.goBack();
+            }}
+            width={'100%'}
+            flex={1}
+            gradient={gradients.dark}
+            // marginBottom={sizes.base}
+          >
+            <Text2 white bold transform="uppercase">
+              Back
+            </Text2>
+          </Button>
+        </View>
         <View style={{marginTop: 30}}></View>
       </ScrollView>
     </SafeAreaView>

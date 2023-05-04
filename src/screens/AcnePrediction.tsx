@@ -16,6 +16,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import AppLoading from 'expo-app-loading';
+import {Button, Text as Text2} from '../components/';
+import {useTheme} from '../hooks/';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -24,6 +26,8 @@ const AcnePrediction = () => {
   const [image, setImage] = useState<any | null>(null);
   const [submitError, setSubmitError] = useState<String | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {assets, colors, gradients, sizes} = useTheme();
 
   async function pickImageFromCamera() {
     console.log('pickImageFromCamera');
@@ -147,24 +151,44 @@ const AcnePrediction = () => {
             Upload your image
           </Text>
         </View> */}
-          {/* <View
-          style={{
-            marginTop: 25,
-            marginBottom: 10,
-            marginHorizontal: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
           <View
             style={{
-              width: 200,
-              height: 200,
-              borderWidth: 1,
-              borderColor: '#797878',
-              backgroundColor: '#ffffff',
-              borderRadius: 20,
-            }}></View>
-        </View> */}
+              marginTop: 25,
+              marginBottom: 10,
+              marginHorizontal: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                width: 200,
+                height: 200,
+                borderWidth: 1,
+                borderColor: '#797878',
+                backgroundColor: '#ffffff',
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              {image?.uri ? (
+                <Image
+                  source={{uri: image?.uri}}
+                  style={{height: '100%', width: '100%', borderRadius: 20}}
+                />
+              ) : (
+                <Text
+                  style={{
+                    fontFamily: 'Poppins',
+                    fontStyle: 'normal',
+                    fontWeight: '500',
+                    fontSize: 15,
+                    color: '#797878',
+                  }}>
+                  No image selected
+                </Text>
+              )}
+            </View>
+          </View>
           <TouchableOpacity onPress={pickImageFromCamera}>
             <View
               style={{
@@ -285,6 +309,7 @@ const AcnePrediction = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginTop: 15,
+                marginBottom: 10,
               }}>
               <Text
                 style={{
@@ -298,77 +323,87 @@ const AcnePrediction = () => {
               </Text>
             </View>
           ) : null}
-          <Pressable
+          <View
             style={{
               marginRight: 20,
               marginLeft: 20,
-              marginTop: 10,
-              paddingTop: 10,
-              paddingBottom: 10,
+              // marginTop: 10,
+              // paddingTop: 10,
+              // paddingBottom: 10,
               borderRadius: 20,
-              borderWidth: 2,
-              borderColor: '#797878',
+              // borderWidth: 2,
+              // borderColor: '#797878',
               justifyContent: 'center',
               alignItems: 'center',
-            }}
-            onPress={() => {
-              if (image == null) {
-                setSubmitError('Please select an image');
-                return;
-              } else {
-                setSubmitError(null);
-              }
-              const samplePred = {
-                acne_preds: 'The Acne type is Blackheads',
-                acne_treatment:
-                  'Good to use products include Retinoids, Salicylic acid (Bea hydroxy acid- BHA), Benzoyl, peroxide, Lactic acid, Charcoal',
-                skin_preds: 'The Skin type is Oily',
-                skin_treatment:
-                  'Good to use products include Dimethicone, lactic, glycolic, and salicylic acid Avoid using products including paraffin, cocoa butter, or oils',
-              };
-
-              console.log(image);
-
-              // navigation.navigate('PredictionResult', {samplePred: samplePred});
-              setIsModalOpen(true);
-              let data = new FormData();
-              // return;
-              data.append('image', {
-                uri: image?.uri,
-                name: 'image.jpg',
-                type: 'image/jpeg',
-              });
-              axios
-                .post(
-                  'https://10d3-103-21-164-182.ngrok-free.app/app/image',
-                  data,
-                  {
-                    headers: {
-                      accept: 'application/json',
-                      // 'Accept-Language': 'en-US,en;q=0.8',
-                      'Content-Type': `multipart/form-data;`, // boundary=${data._boundary}
-                    },
-                  },
-                )
-                .then((response) => {
-                  console.log('response:::-------', response?.data);
-                  setIsModalOpen(false);
-                  if (!response?.data?.acne_preds) {
-                    setSubmitError('Error response from api');
-                    return;
-                  }
-                  setImage(null);
-                  navigation.navigate('PredictionResult', {
-                    samplePred: response?.data,
-                  });
-                })
-                .catch((error) => {
-                  setIsModalOpen(false);
-                  console.log('some error occured', error);
-                  setSubmitError('some error occured');
-                });
             }}>
-            <Text
+            <Button
+              onPress={() => {
+                if (image == null) {
+                  setSubmitError('Please select an image');
+                  return;
+                } else {
+                  setSubmitError(null);
+                }
+                const samplePred = {
+                  acne_preds: 'The Acne type is Blackheads',
+                  acne_treatment:
+                    'Good to use products include Retinoids, Salicylic acid (Bea hydroxy acid- BHA), Benzoyl, peroxide, Lactic acid, Charcoal',
+                  skin_preds: 'The Skin type is Oily',
+                  skin_treatment:
+                    'Good to use products include Dimethicone, lactic, glycolic, and salicylic acid Avoid using products including paraffin, cocoa butter, or oils',
+                };
+
+                console.log(image);
+
+                // navigation.navigate('PredictionResult', {samplePred: samplePred});
+                setIsModalOpen(true);
+                let data = new FormData();
+                // return;
+                data.append('image', {
+                  uri: image?.uri,
+                  name: 'image.jpg',
+                  type: 'image/jpeg',
+                });
+                axios
+                  .post(
+                    'https://10d3-103-21-164-182.ngrok-free.app/app/image',
+                    data,
+                    {
+                      headers: {
+                        accept: 'application/json',
+                        // 'Accept-Language': 'en-US,en;q=0.8',
+                        'Content-Type': `multipart/form-data;`, // boundary=${data._boundary}
+                      },
+                    },
+                  )
+                  .then((response) => {
+                    console.log('response:::-------', response?.data);
+                    setIsModalOpen(false);
+                    if (!response?.data?.acne_preds) {
+                      setSubmitError('Error response from api');
+                      return;
+                    }
+                    setImage(null);
+                    navigation.navigate('PredictionResult', {
+                      samplePred: response?.data,
+                    });
+                  })
+                  .catch((error) => {
+                    setIsModalOpen(false);
+                    console.log('some error occured', error);
+                    setSubmitError('some error occured');
+                  });
+              }}
+              width={'100%'}
+              flex={1}
+              gradient={gradients.dark}
+              // marginBottom={sizes.base}
+            >
+              <Text2 white bold transform="uppercase">
+                Submit
+              </Text2>
+            </Button>
+            {/* <Text
               style={{
                 fontFamily: 'Poppins',
                 fontStyle: 'normal',
@@ -377,9 +412,38 @@ const AcnePrediction = () => {
                 color: '#000000',
               }}>
               SUBMIT
-            </Text>
-          </Pressable>
-          <Pressable
+            </Text> */}
+          </View>
+
+          <View
+            style={{
+              marginRight: 20,
+              marginLeft: 20,
+              marginTop: 10,
+              // paddingTop: 10,
+              // paddingBottom: 10,
+              borderRadius: 20,
+              // borderWidth: 2,
+              // borderColor: '#797878',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Button
+              onPress={() => {
+                navigation.goBack();
+              }}
+              width={'100%'}
+              flex={1}
+              gradient={gradients.dark}
+              // marginBottom={sizes.base}
+            >
+              <Text2 white bold transform="uppercase">
+                Back
+              </Text2>
+            </Button>
+          </View>
+
+          {/* <Pressable
             style={{
               marginRight: 20,
               marginLeft: 20,
@@ -405,7 +469,8 @@ const AcnePrediction = () => {
               }}>
               BACK
             </Text>
-          </Pressable>
+          </Pressable> */}
+          <View style={{marginTop: 30}}></View>
         </ScrollView>
       )}
     </SafeAreaView>
