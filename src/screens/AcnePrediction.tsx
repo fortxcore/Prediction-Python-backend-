@@ -111,9 +111,9 @@ const AcnePrediction = () => {
             style={{
               marginRight: 20,
               marginLeft: 20,
-              marginTop: 10,
-              paddingTop: 20,
-              paddingBottom: 20,
+              marginTop: 0,
+              paddingTop: 10,
+              paddingBottom: 10,
               borderRadius: 10,
               borderWidth: 2,
               borderColor: '#797878',
@@ -161,8 +161,8 @@ const AcnePrediction = () => {
             }}>
             <View
               style={{
-                width: 200,
-                height: 200,
+                width: image?.uri ? 250 : 150,
+                height: image?.uri ? 250 : 150,
                 borderWidth: 1,
                 borderColor: '#797878',
                 backgroundColor: '#ffffff',
@@ -189,115 +189,125 @@ const AcnePrediction = () => {
               )}
             </View>
           </View>
-          <TouchableOpacity onPress={pickImageFromCamera}>
-            <View
-              style={{
-                marginTop: 40,
-                marginBottom: 10,
-                marginHorizontal: 25,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+          {image?.uri ? null : (
+            <TouchableOpacity onPress={pickImageFromCamera}>
               <View
                 style={{
-                  width: '100%',
-                  borderWidth: 1,
-                  borderColor: '#797878',
-                  backgroundColor: '#ffffff',
-                  borderRadius: 10,
-                  borderStyle: 'dotted',
+                  marginTop: 20,
+                  marginBottom: 10,
+                  marginHorizontal: 25,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
                 <View
                   style={{
-                    paddingHorizontal: 15,
-                    paddingVertical: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
+                    width: '100%',
+                    borderWidth: 1,
+                    borderColor: '#797878',
+                    backgroundColor: '#ffffff',
+                    borderRadius: 10,
+                    borderStyle: 'dotted',
                   }}>
                   <View
                     style={{
-                      paddingBottom: 10,
-                      backgroundColor: 'rgba(52, 52, 52, 0.0)',
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
                     }}>
-                    <Image
-                      source={require('./../assets/images/upload_icon.png')}
-                      style={{height: 60, width: 60}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      paddingBottom: 10,
-                    }}>
-                    <Text
+                    <View
                       style={{
-                        fontFamily: 'Poppins',
-                        fontStyle: 'normal',
-                        fontWeight: '500',
-                        fontSize: 15,
-                        color: '#797878',
+                        paddingBottom: 10,
+                        backgroundColor: 'rgba(52, 52, 52, 0.0)',
                       }}>
-                      Take a Photo
-                    </Text>
+                      <Image
+                        source={require('./../assets/images/camera_icon.png')}
+                        style={{height: 40, width: 40}}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        paddingBottom: 10,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins',
+                          fontStyle: 'normal',
+                          fontWeight: '500',
+                          fontSize: 15,
+                          color: '#797878',
+                        }}>
+                        Take a Photo
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={pickImageFromGallery}>
-            <View
-              style={{
-                marginTop: 5,
-                marginBottom: 10,
-                marginHorizontal: 25,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+            </TouchableOpacity>
+          )}
+          {image?.uri ? null : (
+            <TouchableOpacity onPress={pickImageFromGallery}>
               <View
                 style={{
-                  width: '100%',
-                  borderWidth: 1,
-                  borderColor: '#797878',
-                  backgroundColor: '#ffffff',
-                  borderRadius: 10,
-                  borderStyle: 'dotted',
+                  marginTop: 5,
+                  marginBottom: 10,
+                  marginHorizontal: 25,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
                 <View
                   style={{
-                    paddingHorizontal: 15,
-                    paddingVertical: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
+                    width: '100%',
+                    borderWidth: 1,
+                    borderColor: '#797878',
+                    backgroundColor: '#ffffff',
+                    borderRadius: 10,
+                    borderStyle: 'dotted',
                   }}>
                   <View
                     style={{
-                      paddingBottom: 10,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
                     }}>
-                    <Image
-                      source={require('./../assets/images/camera_icon.png')}
-                      style={{height: 60, width: 60}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      paddingBottom: 10,
-                    }}>
-                    <Text
+                    <View
                       style={{
-                        fontFamily: 'Poppins',
-                        fontStyle: 'normal',
-                        fontWeight: '500',
-                        fontSize: 15,
-                        color: '#797878',
+                        paddingBottom: 10,
                       }}>
-                      Browse your image
-                    </Text>
+                      <Image
+                        source={require('./../assets/images/upload_icon.png')}
+                        style={{height: 40, width: 40}}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        paddingBottom: 10,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins',
+                          fontStyle: 'normal',
+                          fontWeight: '500',
+                          fontSize: 15,
+                          color: '#797878',
+                        }}>
+                        Browse your image
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          )}
+          {!image?.uri ? null : (
+            <View
+              style={{
+                height: 140,
+              }}></View>
+          )}
           <View
             style={{
               marginTop: 30,
@@ -366,7 +376,7 @@ const AcnePrediction = () => {
                 });
                 axios
                   .post(
-                    'https://10d3-103-21-164-182.ngrok-free.app/app/image',
+                    'https://10d3-103-21-164-182.ngrok-free.app/app/image', //HERE CHANGE API URL
                     data,
                     {
                       headers: {
